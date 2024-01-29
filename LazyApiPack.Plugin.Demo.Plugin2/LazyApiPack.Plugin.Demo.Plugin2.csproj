@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LazyApiPack.Plugin.Demo.Common\LazyApiPack.Plugin.Demo.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="FullWithPrivate.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="&quot;C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe&quot; sign /f &quot;$(TargetDir)FullWithPrivate.pfx&quot; /p 12345 /fd SHA256 &quot;$(TargetPath)&quot;" />
+  </Target>
+
+</Project>
